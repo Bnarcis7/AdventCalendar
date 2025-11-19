@@ -1,0 +1,157 @@
+.share-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.3s ease;
+}
+
+.share-modal-content {
+  width: 90%;
+  max-width: 600px;
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.3s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.share-modal-content h2 {
+  margin-top: 0;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.share-description {
+  text-align: center;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+  font-size: 1.1rem;
+}
+
+.share-section {
+  margin-bottom: 2rem;
+}
+
+.share-section h3 {
+  margin-bottom: 0.8rem;
+  font-size: 1.3rem;
+}
+
+.share-input-group {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.share-input {
+  flex: 1;
+  padding: 0.8rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  font-size: 0.9rem;
+  font-family: monospace;
+}
+
+.btn-copy {
+  padding: 0.8rem 1.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 8px;
+  color: inherit;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-copy:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.share-hint {
+  font-size: 0.85rem;
+  opacity: 0.7;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+.share-info {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.share-info p {
+  margin-top: 0;
+  margin-bottom: 0.8rem;
+}
+
+.share-info ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.share-info li {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+.btn-close-modal {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-close-modal:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .share-modal-content {
+    padding: 1.5rem;
+  }
+
+  .share-modal-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .share-input-group {
+    flex-direction: column;
+  }
+
+  .btn-copy {
+    width: 100%;
+  }
+}

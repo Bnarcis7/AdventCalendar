@@ -3,6 +3,8 @@ import { useCalendar } from '../context/CalendarContext';
 import { themes } from '../data/themes';
 import ShareModal from './ShareModal';
 import MusicPlayer from './MusicPlayer';
+import SnowEffect from './SnowEffect';
+import CountdownTimer from './CountdownTimer';
 import './Calendar.css';
 
 const Calendar = () => {
@@ -90,43 +92,25 @@ const Calendar = () => {
       }}
     >
       {/* Decorative elements */}
-      <div className="decorations">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <span 
-            key={i} 
-            className="decoration" 
-            style={{ 
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${5 + Math.random() * 5}s`
-            }}
-          >
-            {currentTheme.decoration}
-          </span>
-        ))}
-      </div>
-
       <div className="calendar-content">
+        {!isViewerMode && (
+          <div className="admin-buttons-top">
+            <button onClick={handleEdit} className="btn-edit" title="Edit Configuration">
+              ⚙️
+            </button>
+            <button onClick={() => setShowShareModal(true)} className="btn-share">
+              🎁 Send Calendar
+            </button>
+          </div>
+        )}
+
         <h1 className="calendar-title">
           {currentTheme.icon} {calendarConfig.title} {currentTheme.icon}
         </h1>
         
-        <div className="calendar-info">
-          <p>🔓 Click unlocked days to reveal your gifts! 🎁</p>
-          <p>🔒 Locked days will unlock on their date</p>
-          {isViewerMode && (
+        {isViewerMode && (
+          <div className="calendar-info">
             <p className="viewer-badge">👁️ Viewing shared calendar</p>
-          )}
-        </div>
-        
-        {!isViewerMode && (
-          <div className="admin-buttons">
-            <button onClick={handleEdit} className="btn-edit">
-              ⚙️ Edit Configuration
-            </button>
-            <button onClick={() => setShowShareModal(true)} className="btn-share">
-              📤 Share Calendar
-            </button>
           </div>
         )}
 
@@ -218,10 +202,16 @@ const Calendar = () => {
         )}
 
         {showShareModal && <ShareModal onClose={() => setShowShareModal(false)} />}
+
+        {/* Countdown Timer below calendar */}
+        <CountdownTimer />
       </div>
 
       {/* Music Player */}
       <MusicPlayer />
+
+      {/* Snow Effect */}
+      <SnowEffect theme={calendarConfig.theme} />
     </div>
   );
 };

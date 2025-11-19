@@ -93,6 +93,15 @@
   flex-wrap: wrap;
 }
 
+.admin-buttons-top {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  display: flex;
+  gap: 1rem;
+  z-index: 100;
+}
+
 .btn-edit,
 .btn-share {
   padding: 0.8rem 1.5rem;
@@ -106,6 +115,24 @@
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.admin-buttons-top .btn-edit {
+  padding: 0.6rem 1rem;
+  font-size: 1.5rem;
+  min-width: auto;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-buttons-top .btn-share {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  white-space: nowrap;
 }
 
 .btn-edit:hover,
@@ -122,6 +149,26 @@
 
 .btn-share:hover {
   background: linear-gradient(135deg, rgba(52, 152, 219, 0.5), rgba(41, 128, 185, 0.5));
+}
+
+/* Responsive adjustments for top buttons */
+@media (max-width: 768px) {
+  .admin-buttons-top {
+    top: 1rem;
+    right: 1rem;
+    gap: 0.5rem;
+  }
+
+  .admin-buttons-top .btn-edit {
+    width: 45px;
+    height: 45px;
+    font-size: 1.3rem;
+  }
+
+  .admin-buttons-top .btn-share {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
 }
 
 .calendar-grid {
@@ -390,7 +437,7 @@
 }
 
 .lock-icon {
-  font-size: 3rem;
+  font-size: 2.5rem;
   animation: lock-pulse 2s infinite;
   filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
   z-index: 3;
@@ -402,46 +449,47 @@
     filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
   }
   50% {
-    transform: scale(1.1);
-    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.7));
   }
 }
 
 .decoration-item {
   position: absolute;
-  font-size: 1.8rem;
-  opacity: 0.9;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  font-size: 1.2rem;
+  opacity: 0.85;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
+  transition: transform 0.3s ease;
 }
 
 /* Bells - top corners, swinging */
 .bell-1 {
-  top: 5%;
-  left: 15%;
+  top: 8%;
+  left: 12%;
   animation: bell-swing 2s infinite ease-in-out;
 }
 
 .bell-2 {
-  top: 5%;
-  right: 15%;
+  top: 8%;
+  right: 12%;
   animation: bell-swing 2s infinite ease-in-out 0.5s;
 }
 
 @keyframes bell-swing {
   0%, 100% {
-    transform: rotate(-15deg);
+    transform: rotate(-10deg);
   }
   50% {
-    transform: rotate(15deg);
+    transform: rotate(10deg);
   }
 }
 
 /* Christmas tree - center top */
 .tree-1 {
-  top: 8%;
+  top: 10%;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 2rem;
+  font-size: 1.3rem;
   animation: tree-grow 3s infinite ease-in-out;
 }
 
@@ -450,20 +498,20 @@
     transform: translateX(-50%) scale(1);
   }
   50% {
-    transform: translateX(-50%) scale(1.1);
+    transform: translateX(-50%) scale(1.05);
   }
 }
 
 /* Christmas balls - sides */
 .ball-1 {
-  top: 40%;
-  left: 10%;
+  top: 42%;
+  left: 15%;
   animation: ball-bounce 2.5s infinite ease-in-out;
 }
 
 .ball-2 {
-  top: 40%;
-  right: 10%;
+  top: 42%;
+  right: 15%;
   animation: ball-bounce 2.5s infinite ease-in-out 0.8s;
 }
 
@@ -472,31 +520,31 @@
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
   }
 }
 
 /* Stars - bottom corners, twinkling */
 .star-1 {
-  bottom: 15%;
-  left: 20%;
+  bottom: 18%;
+  left: 18%;
   animation: star-twinkle 1.5s infinite ease-in-out;
 }
 
 .star-2 {
-  bottom: 15%;
-  right: 20%;
+  bottom: 18%;
+  right: 18%;
   animation: star-twinkle 1.5s infinite ease-in-out 0.7s;
 }
 
 @keyframes star-twinkle {
   0%, 100% {
-    opacity: 1;
+    opacity: 0.85;
     transform: scale(1) rotate(0deg);
   }
   50% {
-    opacity: 0.5;
-    transform: scale(1.2) rotate(180deg);
+    opacity: 0.4;
+    transform: scale(1.15) rotate(180deg);
   }
 }
 

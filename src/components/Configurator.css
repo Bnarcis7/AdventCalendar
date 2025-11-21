@@ -239,19 +239,93 @@
 }
 
 @media (max-width: 768px) {
+  .configurator {
+    padding: 1rem;
+  }
+
   .configurator-container {
     padding: 1.5rem;
   }
 
   .configurator-title {
-    font-size: 2rem;
+    font-size: 2.2rem;
+  }
+
+  .label-text {
+    font-size: 1.1rem;
   }
 
   .gifts-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.8rem;
   }
 
   .button-group {
     flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .btn-done,
+  .btn-reset {
+    width: 100%;
+    padding: 0.9rem 1.5rem;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .configurator {
+    padding: 0.5rem;
+  }
+
+  .configurator-container {
+    padding: 1rem;
+    border-radius: 15px;
+  }
+
+  .configurator-title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .label-text {
+    font-size: 1rem;
+  }
+
+  .input-field {
+    padding: 0.7rem;
+    font-size: 0.95rem;
+  }
+
+  .gifts-grid {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+
+  .gift-item {
+    padding: 0.8rem;
+  }
+
+  .gift-day {
+    font-size: 1rem;
+  }
+
+  .gift-text {
+    font-size: 0.85rem;
+  }
+
+  .gift-input {
+    font-size: 0.85rem;
+    padding: 0.4rem;
+  }
+
+  .btn-done,
+  .btn-reset {
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+  }
+
+  .info-text {
+    font-size: 0.85rem;
   }
 }

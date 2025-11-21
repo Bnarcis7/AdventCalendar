@@ -7,6 +7,21 @@
   transition: all 0.3s ease;
 }
 
+/* Mobile container adjustments */
+@media (max-width: 768px) {
+  .calendar-container {
+    padding: 1rem;
+    padding-bottom: 140px; /* More space for wrapped music player */
+  }
+}
+
+@media (max-width: 480px) {
+  .calendar-container {
+    padding: 0.5rem;
+    padding-bottom: 160px;
+  }
+}
+
 .decorations {
   position: absolute;
   top: 0;
@@ -46,6 +61,21 @@
   margin-bottom: 1rem;
   text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
   animation: pulse 3s infinite;
+}
+
+/* Mobile title sizing */
+@media (max-width: 768px) {
+  .calendar-title {
+    font-size: 2.2rem;
+    margin-bottom: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .calendar-title {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
 }
 
 @keyframes pulse {
@@ -168,6 +198,26 @@
   .admin-buttons-top .btn-share {
     padding: 0.5rem 1rem;
     font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-buttons-top {
+    top: 0.5rem;
+    right: 0.5rem;
+    gap: 0.4rem;
+  }
+
+  .admin-buttons-top .btn-edit {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+    padding: 0.4rem;
+  }
+
+  .admin-buttons-top .btn-share {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
   }
 }
 
@@ -361,27 +411,32 @@
 }
 
 @media (max-width: 768px) {
-  .calendar-title {
-    font-size: 2rem;
-  }
-
   .calendar-grid {
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
     gap: 1rem;
-    padding: 1rem;
+    padding: 1.2rem;
   }
 
   .door-number {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
 
   .door-icon {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+  }
+
+  .gift-emoji {
+    font-size: 2rem;
+  }
+
+  .gift-name {
+    font-size: 0.8rem;
   }
 
   .gift-popup-content {
-    padding: 2rem;
+    padding: 2rem 1.5rem;
     margin: 1rem;
+    max-width: 90%;
   }
 
   .gift-popup-content h2 {
@@ -395,28 +450,68 @@
 
 @media (max-width: 480px) {
   .calendar-grid {
-    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-    gap: 0.8rem;
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    gap: 0.6rem;
+    padding: 0.8rem;
   }
 
   .door-number {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
   }
 
   .door-icon {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+  }
+
+  .gift-emoji {
+    font-size: 1.6rem;
+  }
+
+  .gift-name {
+    font-size: 0.7rem;
   }
 
   .decoration-item {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 
   .tree-1 {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
   }
 
   .lock-icon {
-    font-size: 2rem;
+    font-size: 1.8rem;
+  }
+
+  .gift-popup-content {
+    padding: 1.5rem 1rem;
+    margin: 0.5rem;
+  }
+
+  .gift-popup-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .popup-gift-text {
+    font-size: 1rem;
+  }
+}
+
+/* Touch-friendly interactions for mobile devices */
+@media (hover: none) and (pointer: coarse) {
+  .calendar-door:active:not(.locked) {
+    transform: scale(0.95);
+  }
+  
+  .btn-edit:active,
+  .btn-share:active {
+    transform: scale(0.95);
+  }
+  
+  .calendar-door:hover:not(.locked) {
+    /* Override desktop hover on touch devices */
+    transform: scale(1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 }
 

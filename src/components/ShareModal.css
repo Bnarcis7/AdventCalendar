@@ -141,10 +141,19 @@
 @media (max-width: 768px) {
   .share-modal-content {
     padding: 1.5rem;
+    width: 95%;
   }
 
   .share-modal-content h2 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+  }
+
+  .share-description {
+    font-size: 1rem;
+  }
+
+  .share-section h3 {
+    font-size: 1.2rem;
   }
 
   .share-input-group {
@@ -153,5 +162,66 @@
 
   .btn-copy {
     width: 100%;
+    padding: 0.7rem 1.2rem;
+  }
+
+  .share-info {
+    padding: 1.2rem;
+  }
+
+  .share-info li {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .share-modal-content {
+    padding: 1.2rem;
+    width: 96%;
+    max-height: 85vh;
+  }
+
+  .share-modal-content h2 {
+    font-size: 1.4rem;
+  }
+
+  .share-description {
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .share-section {
+    margin-bottom: 1.5rem;
+  }
+
+  .share-section h3 {
+    font-size: 1.1rem;
+  }
+
+  .share-input {
+    padding: 0.7rem;
+    font-size: 0.85rem;
+  }
+
+  .btn-copy {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .share-info {
+    padding: 1rem;
+  }
+
+  .share-info p {
+    font-size: 0.9rem;
+  }
+
+  .share-info li {
+    font-size: 0.85rem;
+  }
+
+  .btn-close-modal {
+    padding: 0.9rem;
+    font-size: 1rem;
   }
 }

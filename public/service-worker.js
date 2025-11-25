@@ -1,11 +1,12 @@
 // Service Worker for Advent Calendar PWA
 const CACHE_NAME = 'advent-calendar-v1';
+const BASE_PATH = '/AdventCalendar/';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icon-192.svg',
-  '/icon-512.svg'
+  BASE_PATH,
+  BASE_PATH + 'index.html',
+  BASE_PATH + 'manifest.json',
+  BASE_PATH + 'icon-192.svg',
+  BASE_PATH + 'icon-512.svg'
 ];
 
 // Install event - cache essential files

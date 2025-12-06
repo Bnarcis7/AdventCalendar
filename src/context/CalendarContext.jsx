@@ -36,7 +36,9 @@ export const CalendarProvider = ({ children }) => {
       theme: 'christmas',
       title: 'My Advent Calendar',
       gifts: {},
-      startDate: new Date().toISOString().split('T')[0]
+      riddles: {}, // New: { dayNumber: { riddle: "question", answer: "answer" } }
+      startDate: new Date().toISOString().split('T')[0],
+      manuallyUnlockedDays: []
     };
   });
 
@@ -65,6 +67,32 @@ export const CalendarProvider = ({ children }) => {
     }));
   };
 
+  const setRiddleForDay = (day, riddleData) => {
+    if (isViewerMode) return;
+    setCalendarConfig(prev => ({
+      ...prev,
+      riddles: {
+        ...prev.riddles,
+        [day]: riddleData
+      }
+    }));
+  };
+
+  const toggleManualUnlock = (day) => {
+    if (isViewerMode) return;
+    setCalendarConfig(prev => {
+      const manuallyUnlockedDays = prev.manuallyUnlockedDays || [];
+      const isCurrentlyUnlocked = manuallyUnlockedDays.includes(day);
+      
+      return {
+        ...prev,
+        manuallyUnlockedDays: isCurrentlyUnlocked
+          ? manuallyUnlockedDays.filter(d => d !== day)
+          : [...manuallyUnlockedDays, day]
+      };
+    });
+  };
+
   const resetCalendar = () => {
     if (isViewerMode) return; // Prevent reset in viewer mode
     setCalendarConfig({
@@ -72,7 +100,9 @@ export const CalendarProvider = ({ children }) => {
       theme: 'christmas',
       title: 'My Advent Calendar',
       gifts: {},
-      startDate: new Date().toISOString().split('T')[0]
+      riddles: {},
+      startDate: new Date().toISOString().split('T')[0],
+      manuallyUnlockedDays: []
     });
   };
 
@@ -81,7 +111,9 @@ export const CalendarProvider = ({ children }) => {
       calendarConfig,
       updateConfig,
       setGiftForDay,
+      setRiddleForDay,
       resetCalendar,
+      toggleManualUnlock,
       isConfiguring,
       setIsConfiguring,
       isViewerMode

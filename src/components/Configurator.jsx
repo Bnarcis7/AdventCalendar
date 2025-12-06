@@ -4,9 +4,11 @@ import { themes } from '../data/themes';
 import './Configurator.css';
 
 const Configurator = () => {
-  const { calendarConfig, updateConfig, setGiftForDay, setIsConfiguring, resetCalendar } = useCalendar();
+  const { calendarConfig, updateConfig, setGiftForDay, setRiddleForDay, setIsConfiguring, resetCalendar, toggleManualUnlock } = useCalendar();
   const [editingDay, setEditingDay] = useState(null);
   const [giftInput, setGiftInput] = useState('');
+  const [riddleInput, setRiddleInput] = useState('');
+  const [answerInput, setAnswerInput] = useState('');
 
   const handleDaysChange = (e) => {
     const days = parseInt(e.target.value) || 1;
@@ -35,6 +37,22 @@ const Configurator = () => {
 
   const handleRemoveGift = (day) => {
     setGiftForDay(day, null);
+  };
+
+  const handleAddRiddle = (day) => {
+    if (riddleInput.trim() && answerInput.trim()) {
+      setRiddleForDay(day, {
+        riddle: riddleInput.trim(),
+        answer: answerInput.trim()
+      });
+      setRiddleInput('');
+      setAnswerInput('');
+      setEditingDay(null);
+    }
+  };
+
+  const handleRemoveRiddle = (day) => {
+    setRiddleForDay(day, null);
   };
 
   const handleDone = () => {
@@ -113,14 +131,43 @@ const Configurator = () => {
         </div>
 
         <div className="config-section gifts-section">
-          <h2>Configure Gifts for Each Day</h2>
+          <h2>Configure Riddles & Answers for Each Day</h2>
+          <p className="info-text">
+            🎯 Add riddles with answers, or regular gifts • 🔓 Click lock to manually unlock days
+          </p>
           <div className="gifts-grid">
-            {Array.from({ length: calendarConfig.days }, (_, i) => i + 1).map(day => (
+            {Array.from({ length: calendarConfig.days }, (_, i) => i + 1).map(day => {
+              const isManuallyUnlocked = (calendarConfig.manuallyUnlockedDays || []).includes(day);
+              return (
               <div key={day} className="gift-item">
-                <div className="gift-day">Day {day}</div>
-                {calendarConfig.gifts[day] ? (
+                <div className="gift-day">
+                  Day {day}
+                  <button
+                    onClick={() => toggleManualUnlock(day)}
+                    className={`btn-unlock ${isManuallyUnlocked ? 'unlocked' : ''}`}
+                    title={isManuallyUnlocked ? 'Click to lock' : 'Click to manually unlock'}
+                  >
+                    {isManuallyUnlocked ? '🔓' : '🔒'}
+                  </button>
+                </div>
+                {calendarConfig.riddles?.[day] ? (
+                  <div className="riddle-display">
+                    <div className="riddle-text">
+                      <strong>🎯 Riddle:</strong> {calendarConfig.riddles[day].riddle}
+                    </div>
+                    <div className="answer-text">
+                      <strong>💡 Answer:</strong> {calendarConfig.riddles[day].answer}
+                    </div>
+                    <button
+                      onClick={() => handleRemoveRiddle(day)}
+                      className="btn-remove"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ) : calendarConfig.gifts[day] ? (
                   <div className="gift-display">
-                    <span className="gift-text">{calendarConfig.gifts[day]}</span>
+                    <span className="gift-text">🎁 {calendarConfig.gifts[day]}</span>
                     <button
                       onClick={() => handleRemoveGift(day)}
                       className="btn-remove"
@@ -129,17 +176,24 @@ const Configurator = () => {
                     </button>
                   </div>
                 ) : editingDay === day ? (
-                  <div className="gift-input-container">
+                  <div className="riddle-input-container">
                     <input
                       type="text"
-                      value={giftInput}
-                      onChange={(e) => setGiftInput(e.target.value)}
-                      onKeyPress={(e) => e.key === 'Enter' && handleAddGift(day)}
-                      placeholder="Enter gift..."
+                      value={riddleInput}
+                      onChange={(e) => setRiddleInput(e.target.value)}
+                      placeholder="Enter riddle question..."
                       className="gift-input"
                       autoFocus
                     />
-                    <button onClick={() => handleAddGift(day)} className="btn-add">
+                    <input
+                      type="text"
+                      value={answerInput}
+                      onChange={(e) => setAnswerInput(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && handleAddRiddle(day)}
+                      placeholder="Enter answer..."
+                      className="gift-input"
+                    />
+                    <button onClick={() => handleAddRiddle(day)} className="btn-add">
                       ✓
                     </button>
                     <button onClick={() => setEditingDay(null)} className="btn-cancel">
@@ -151,11 +205,12 @@ const Configurator = () => {
                     onClick={() => setEditingDay(day)}
                     className="btn-add-gift"
                   >
-                    + Add Gift
+                    + Add Riddle
                   </button>
                 )}
               </div>
-            ))}
+            );
+            })}
           </div>
         </div>
 

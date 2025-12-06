@@ -10,14 +10,24 @@ import './Calendar.css';
 const Calendar = () => {
   const { calendarConfig, setIsConfiguring, isViewerMode } = useCalendar();
   const [openedDays, setOpenedDays] = useState(new Set());
+  const [answeredDays, setAnsweredDays] = useState(new Set()); // Track which days have been answered
   const [revealedGift, setRevealedGift] = useState(null);
   const [fireworks, setFireworks] = useState([]);
   const [showShareModal, setShowShareModal] = useState(false);
+  const [userAnswer, setUserAnswer] = useState('');
+  const [showAnswer, setShowAnswer] = useState(false);
 
   const currentTheme = themes[calendarConfig.theme];
 
-  // Check if a day is unlocked based on the date
+  // Check if a day is unlocked based on the date or manual unlock
   const isDayUnlocked = (day) => {
+    // Check if manually unlocked
+    const manuallyUnlockedDays = calendarConfig.manuallyUnlockedDays || [];
+    if (manuallyUnlockedDays.includes(day)) {
+      return true;
+    }
+    
+    // Check if unlocked by date
     const startDate = new Date(calendarConfig.startDate);
     const dayDate = new Date(startDate);
     dayDate.setDate(startDate.getDate() + (day - 1));
@@ -69,14 +79,31 @@ const Calendar = () => {
     
     if (!openedDays.has(day)) {
       setOpenedDays(new Set([...openedDays, day]));
-      if (calendarConfig.gifts[day]) {
-        setRevealedGift({ day, gift: calendarConfig.gifts[day] });
-        setTimeout(() => {
-          setRevealedGift(null);
-          setFireworks([]); // Clear all fireworks when popup closes
-        }, 3000);
+      const riddleData = calendarConfig.riddles?.[day];
+      if (riddleData) {
+        setRevealedGift({ day, riddle: riddleData.riddle, answer: riddleData.answer });
+        setUserAnswer('');
+        setShowAnswer(false);
       }
     }
+  };
+
+  const handleAnswerSubmit = () => {
+    setShowAnswer(true);
+    if (revealedGift?.day) {
+      setAnsweredDays(new Set([...answeredDays, revealedGift.day]));
+    }
+  };
+
+  const handleClosePopup = () => {
+    // Mark day as answered when closing popup (whether they submitted or not)
+    if (revealedGift?.day && revealedGift?.riddle) {
+      setAnsweredDays(new Set([...answeredDays, revealedGift.day]));
+    }
+    setRevealedGift(null);
+    setFireworks([]);
+    setUserAnswer('');
+    setShowAnswer(false);
   };
 
   const handleEdit = () => {
@@ -117,7 +144,9 @@ const Calendar = () => {
         <div className="calendar-grid">
           {Array.from({ length: calendarConfig.days }, (_, i) => i + 1).map(day => {
             const isOpened = openedDays.has(day);
+            const isAnswered = answeredDays.has(day);
             const hasGift = calendarConfig.gifts[day];
+            const hasRiddle = calendarConfig.riddles?.[day];
             const isUnlocked = isDayUnlocked(day);
 
             return (
@@ -146,7 +175,17 @@ const Calendar = () => {
                   )}
                 </div>
                 <div className="door-back">
-                  {hasGift ? (
+                  {isOpened && hasRiddle && isAnswered ? (
+                    <div className="gift-reveal">
+                      <span className="gift-emoji">💡</span>
+                      <span className="gift-name">{calendarConfig.riddles[day].answer}</span>
+                    </div>
+                  ) : isOpened && hasRiddle ? (
+                    <div className="gift-reveal">
+                      <span className="gift-emoji">🎯</span>
+                      <span className="gift-name">Riddle opened!</span>
+                    </div>
+                  ) : hasGift ? (
                     <div className="gift-reveal">
                       <span className="gift-emoji">🎁</span>
                       <span className="gift-name">{calendarConfig.gifts[day]}</span>
@@ -190,13 +229,48 @@ const Calendar = () => {
         )}
 
         {revealedGift && (
-          <div className="gift-popup">
-            <div className="gift-popup-content" style={{ 
-              background: currentTheme.cardBackground,
-              color: currentTheme.textColor 
-            }}>
-              <h2>Day {revealedGift.day} {currentTheme.icon}</h2>
-              <p className="popup-gift-text">{revealedGift.gift}</p>
+          <div className="gift-popup" onClick={handleClosePopup}>
+            <div 
+              className="gift-popup-content" 
+              style={{ 
+                background: currentTheme.cardBackground,
+                color: currentTheme.textColor 
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h2>Day {revealedGift.day} 🎯</h2>
+              
+              {revealedGift.riddle ? (
+                <div className="riddle-container">
+                  <p className="riddle-question">❓ {revealedGift.riddle}</p>
+                  
+                  {!showAnswer && (
+                    <div className="answer-input-container">
+                      <input
+                        type="text"
+                        value={userAnswer}
+                        onChange={(e) => setUserAnswer(e.target.value)}
+                        onKeyPress={(e) => e.key === 'Enter' && handleAnswerSubmit()}
+                        placeholder="Type your answer..."
+                        className="answer-input"
+                        autoFocus
+                      />
+                      <button onClick={handleAnswerSubmit} className="btn-submit-answer">
+                        Submit
+                      </button>
+                    </div>
+                  )}
+                  
+                  {showAnswer && (
+                    <div className="answer-reveal">
+                      <p className="answer-label">💡 Answer:</p>
+                      <p className="answer-text">{revealedGift.answer}</p>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <p className="popup-gift-text">{revealedGift.gift}</p>
+              )}
             </div>
           </div>
         )}

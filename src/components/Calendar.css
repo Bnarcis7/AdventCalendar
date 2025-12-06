@@ -461,6 +461,14 @@
   text-align: center;
 }
 
+.riddle-hint {
+  font-size: 0.95rem;
+  opacity: 0.7;
+  margin-top: 1.5rem;
+  text-align: center;
+  font-style: italic;
+}
+
 .answer-input-container {
   display: flex;
   gap: 0.5rem;

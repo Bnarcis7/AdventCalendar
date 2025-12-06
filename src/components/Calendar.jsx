@@ -177,17 +177,14 @@ const Calendar = () => {
                 <div className="door-back">
                   {isOpened && hasRiddle && isAnswered ? (
                     <div className="gift-reveal">
-                      <span className="gift-emoji">💡</span>
                       <span className="gift-name">{calendarConfig.riddles[day].answer}</span>
                     </div>
                   ) : isOpened && hasRiddle ? (
                     <div className="gift-reveal">
-                      <span className="gift-emoji">🎯</span>
                       <span className="gift-name">Riddle opened!</span>
                     </div>
                   ) : hasGift ? (
                     <div className="gift-reveal">
-                      <span className="gift-emoji">🎁</span>
                       <span className="gift-name">{calendarConfig.gifts[day]}</span>
                     </div>
                   ) : (
@@ -243,30 +240,6 @@ const Calendar = () => {
               {revealedGift.riddle ? (
                 <div className="riddle-container">
                   <p className="riddle-question">❓ {revealedGift.riddle}</p>
-                  
-                  {!showAnswer && (
-                    <div className="answer-input-container">
-                      <input
-                        type="text"
-                        value={userAnswer}
-                        onChange={(e) => setUserAnswer(e.target.value)}
-                        onKeyPress={(e) => e.key === 'Enter' && handleAnswerSubmit()}
-                        placeholder="Type your answer..."
-                        className="answer-input"
-                        autoFocus
-                      />
-                      <button onClick={handleAnswerSubmit} className="btn-submit-answer">
-                        Submit
-                      </button>
-                    </div>
-                  )}
-                  
-                  {showAnswer && (
-                    <div className="answer-reveal">
-                      <p className="answer-label">💡 Answer:</p>
-                      <p className="answer-text">{revealedGift.answer}</p>
-                    </div>
-                  )}
                 </div>
               ) : (
                 <p className="popup-gift-text">{revealedGift.gift}</p>
